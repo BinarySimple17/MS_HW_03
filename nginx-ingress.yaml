@@ -1,0 +1,6 @@
+controller:
+  service:
+    type: LoadBalancer
+  hostNetwork: false
+  publishService:
+    enabled: true

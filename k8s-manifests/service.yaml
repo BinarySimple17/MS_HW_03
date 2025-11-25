@@ -1,0 +1,17 @@
+# Создается Service типа ClusterIP
+# Service слушает на порту 80 внутри кластера
+# Перенаправляет трафик на порт 8000 контейнеров
+# Балансирует нагрузку между 2 репликами pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: health-service
+spec:
+  selector:
+    app: health-service #под с этой меткой
+  ports:
+    - protocol: TCP
+      port: 80 #Порт сервиса
+      targetPort: 8000 #Порт контейнера (8000)
+  type: ClusterIP
+  # type: NodePort
