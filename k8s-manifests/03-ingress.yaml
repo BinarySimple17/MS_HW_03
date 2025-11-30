@@ -1,35 +1,3 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: health-service-ingress
-#   annotations:
-#     nginx.ingress.kubernetes.io/rewrite-target: /$2
-# spec:
-#   ingressClassName: nginx
-#   rules:
-#     - host: arch.homework
-#       http:
-#         paths:
-#           - path: /otusapp/(.*)/(.*)
-#             pathType: ImplementationSpecific
-#             backend:
-#               service:
-#                 name: health-service
-#                 port:
-#                   number: 80
-
-#           - path: /(.*)
-#             pathType: ImplementationSpecific
-#             backend:
-#               service:
-#                 name: health-service
-#                 port:
-#                   number: 80
-# Ingress слушает запросы к arch.homework
-# Два правила маршрутизации:
-# Прямой доступ: arch.homework/health → сервис
-# Rewrite правило: arch.homework/otusapp/aeugene/health → arch.homework/health
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

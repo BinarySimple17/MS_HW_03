@@ -1,0 +1,15 @@
+# Создается Service
+# Service слушает на порту 80 внутри кластера
+# Перенаправляет трафик на порт 8000 одного из подов
+apiVersion: v1
+kind: Service
+metadata:
+  name: health-service
+spec:
+  selector:
+    app: health-service #поды с этой меткой
+  ports:
+    - protocol: TCP
+      port: 80 #Порт сервиса
+      targetPort: 8000 #Порт пода (8000)
+  type: ClusterIP

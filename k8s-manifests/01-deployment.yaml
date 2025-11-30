@@ -27,6 +27,8 @@ spec:
           env:
             - name: PORT
               value: "8000"
+            - name: SERVER_ADDRESS #
+              value: "0.0.0.0" # IPv4
           # resources: #noisy neighbor ограничения ресурсов
           # requests: #Минимальные гарантированные ресурсы
           # с ограничением очень медленно.
