@@ -49,6 +49,19 @@ winget kubernetes.minikube
 minikube start
 ```
 
+#### Install Nginx
+```
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/
+helm repo update
+kubectl create namespace ng
+helm install nginx ingress-nginx/ingress-nginx --namespace ng -f nginx-ingress.yaml
+```
+
+##### Проверяем поды ingress, ждем running
+```
+kubectl get pods -n ng
+```
+
 #### Переходим в папку k8s-manifests
 ```
 cd k8s-manifests
@@ -62,20 +75,6 @@ kubectl apply -f .
 #### Смотрим ждем running
 ```
 kubectl get all
-```
-
-#### Load Balancer
-```
-cd ..
-kubectl create namespace ng
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/
-helm repo update
-helm install nginx ingress-nginx/ingress-nginx --namespace ng -f nginx-ingress.yaml
-```
-
-##### Проверяем поды ingress controller
-```
-kubectl get pods -n ng
 ```
 
 #### Проверяем сервисы и порты ingress controller  
