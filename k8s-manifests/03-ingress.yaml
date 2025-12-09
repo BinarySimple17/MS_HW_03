@@ -3,26 +3,23 @@ kind: Ingress
 metadata:
   name: health-service-ingress
   annotations:
-    # nginx.ingress.kubernetes.io/rewrite-target: /$2 # REWRITE если ваша проблема решилась регуляркой, то теперь у вас две проблемы (c)
-    nginx.ingress.kubernetes.io/rewrite-target: /health/ # REWRITE
+    nginx.ingress.kubernetes.io/rewrite-target: /$2 # REWRITE
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
-  ingressClassName: nginx #класс nginx ingress
+  ingressClassName: nginx
   rules:
-    - host: arch.homework #хост arch.homework
+    - host: arch.homework # хост arch.homework
       http:
         paths:
-          - path: /otusapp/([^/]+)/health/?$
+          - path: /otusapp/([^/]+)/(.*)   # две группы захвата
             pathType: ImplementationSpecific
             backend:
               service:
                 name: health-service
                 port:
                   number: 80
-
-          # - path: /health
-          #   pathType: Prefix
-          - path: /health/?$
+          # Правило для всех остальных путей
+          - path: /()(.*)       #
             pathType: ImplementationSpecific
             backend:
               service:
