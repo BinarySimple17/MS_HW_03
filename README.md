@@ -49,7 +49,7 @@ winget kubernetes.minikube
 minikube start
 ```
 
-#### Install Nginx
+#### Install Nginx в ng
 ```
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/
 helm repo update
@@ -92,4 +92,10 @@ minikube tunnel
 curl http://arch.homework/health
 
 curl http://arch.homework/otusapp/aeugene/health
+```
+
+#### Удаляем 
+```
+kubectl delete -f .
+kubectl delete namespace ng
 ```
