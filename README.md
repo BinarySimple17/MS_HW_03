@@ -81,23 +81,15 @@ kubectl get all
 ```
 kubectl get svc -n ng
 ```
-~external ip~ pending пока не запустим туннель
 
 #### в другой консоли и не закрываем
 ```
 minikube tunnel
 ```
 
-#### обратно в старой консоли видим назначенный external ip
-```
-kubectl get svc -n ng
-```
-
 #### проверяем
 ```
-curl http://arch.homework/health/
 curl http://arch.homework/health
 
-curl http://arch.homework/otusapp/aeugene/health/
 curl http://arch.homework/otusapp/aeugene/health
 ```
