@@ -93,6 +93,7 @@ curl http://arch.homework/health
 
 curl http://arch.homework/otusapp/aeugene/health
 ```
+[Postman коллекция HW3](./.postman/HW3.postman_collection.json)
 
 #### Удаляем 
 ```
