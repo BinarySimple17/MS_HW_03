@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: health-service-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2 # REWRITE
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: arch.homework # хост arch.homework
+      http:
+        paths:
+          - path: /otusapp/([^/]+)/(.*)   # две группы захвата
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: health-service
+                port:
+                  number: 80
+          # Правило для всех остальных путей
+          - path: /()(.*)       #
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: health-service
+                port:
+                  number: 80

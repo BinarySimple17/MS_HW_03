@@ -1,0 +1,46 @@
+# Создается деплой с 2 репликами пода
+# Каждый под запускает контейнер из образа на Docker Hub
+# Контейнер слушает на порту 8000
+# Liveness probe проверяет, жив ли контейнер (перезапускает если нет)
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-service
+  labels:
+    app: health-service
+spec:
+  replicas: 2 # количество реплик не меньше 2
+  selector:
+    matchLabels:
+      app: health-service
+  template:
+    metadata:
+      labels:
+        app: health-service
+    spec:
+      containers:
+        - name: health-service
+          image: binarysimple/simple_health:latest #image с Dockerhub
+          ports:
+            - containerPort: 8000 #сервис на порту 8000
+          env:
+            - name: PORT
+              value: "8000"
+            - name: SERVER_ADDRESS #
+              value: "0.0.0.0" # IPv4
+          # resources: #noisy neighbor ограничения ресурсов
+          # requests: #Минимальные гарантированные ресурсы
+          # с ограничением очень медленно.
+          # memory: "64Mi"
+          # cpu: "50m"
+          # limits: #Максимальные ресурсы
+          # memory: "128Mi"
+          # cpu: "100m"
+          livenessProbe: #Liveness проба
+            httpGet:
+              path: /health/ # проверка /health endpoint
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5

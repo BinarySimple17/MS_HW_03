@@ -28,3 +28,75 @@
 ###### Задание со звездой:
 В Ingress-е должно быть правило, которое форвардит все запросы с /otusapp/{student name}/* на сервис с rewrite-ом пути. Где {student name} - это имя студента.
 Например: curl arch.homework/otusapp/aeugene/health -> рерайт пути на arch.homework/health
+
+### Решение
+#### Шаги 1, 2 в рамках предыдущего ДЗ
+#### В консоли
+- два экз. powershell. три, если запускать dashboard
+
+- если драйвер миникуба докер, то в hosts
+```
+127.0.0.1 arch.homework 
+```
+
+#### Скачиваем, ставим
+```
+winget kubernetes.minikube
+```
+
+#### minikube
+```
+minikube start
+```
+
+#### Install Nginx в ng
+```
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/
+helm repo update
+kubectl create namespace ng
+helm install nginx ingress-nginx/ingress-nginx --namespace ng -f nginx-ingress.yaml
+```
+
+##### Проверяем поды ingress, ждем running
+```
+kubectl get pods -n ng
+```
+
+#### Переходим в папку k8s-manifests
+```
+cd k8s-manifests
+```
+
+#### Применяем все манифесты
+```
+kubectl apply -f .
+```
+
+#### Смотрим ждем running
+```
+kubectl get all
+```
+
+#### Проверяем сервисы и порты ingress controller  
+```
+kubectl get svc -n ng
+```
+
+#### в другой консоли и не закрываем
+```
+minikube tunnel
+```
+
+#### проверяем
+```
+curl http://arch.homework/health
+
+curl http://arch.homework/otusapp/aeugene/health
+```
+[Postman коллекция HW3](./.postman/HW3.postman_collection.json)
+
+#### Удаляем 
+```
+kubectl delete -f .
+kubectl delete namespace ng
+```
